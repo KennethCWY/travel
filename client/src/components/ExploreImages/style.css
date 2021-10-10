@@ -1,0 +1,10 @@
+.image-container {
+    padding: 20px 70px 20px 70px;
+}
+
+.box-shadow-below-hover img:hover {
+    -webkit-box-shadow: 0 12px 18px -6px black;
+    -moz-box-shadow: 0 12px 18px -6px black;
+    box-shadow: 0 12px 18px -6px black;
+    cursor: pointer;
+}
