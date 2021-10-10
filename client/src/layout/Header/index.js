@@ -4,7 +4,7 @@ import "./style.css";
 
 const Header = () => {
   return (
-    <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar static-top navbar-expand-lg navbar-dark bg-dark">
       <NavLink exact to="/" className="navbar-brand">
         Oyster Card
       </NavLink>
