@@ -1,5 +1,5 @@
 import React from "react";
-import { SearchBar } from "../../components";
+import { ExploreImages, SearchBar } from "../../components";
 import "./style.css";
 
 const Explore = () => {
@@ -7,6 +7,7 @@ const Explore = () => {
     <div>
       <SearchBar />
       <h2>Discover upcoming flights</h2>
+      <ExploreImages />
     </div>
   );
 };
