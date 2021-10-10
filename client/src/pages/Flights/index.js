@@ -1,7 +1,8 @@
 import React from "react";
+import { FlightCard } from "../../components";
 
 const Flights = () => {
-  return <div></div>;
+  return <FlightCard />
 };
 
 export default Flights;
