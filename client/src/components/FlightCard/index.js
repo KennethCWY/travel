@@ -5,42 +5,37 @@ import axios from 'axios'
 import "./style.css";
 
 function FlightCard() {
-    
-    
-    async function fetchCityIATA(city) {
-
-        let params, response, result, filteredResult;
-
-        for (let i = 0; i < 94; i++) {
-            try {
-                params = {
-                    access_key: '7a9f40a1e4bf0a4d559229c86894f838',
-                    offset: 100*i
-                }
-
-                response = await axios.get('http://api.aviationstack.com/v1/cities', {params});
-                result = response.data.data;
-                filteredResult = await result.filter(place => place.city_name === city);
-            } catch (err) {
-                console.warn(err);
-            }
-            if (filteredResult.length) { break; }
-        }
-        console.log(filteredResult[0]);
-        return filteredResult[0].iata_code;
-    }
 
     useEffect(() => {
         async function fetchData() {
-            const city_iata = await fetchCityIATA('London');
-            const params = {
-                access_key: '7a9f40a1e4bf0a4d559229c86894f838',
-                dep_iata: city_iata
-            }
 
-            const response = await axios.get('http://api.aviationstack.com/v1/flights', {params});
-            const result = response.data.data;
-            console.log(result);
+            const cityData = await axios.get('https://api.npoint.io/5f5a6588530da581be26');
+            const lons = cityData.data.filter(city => city.name === 'London' && city.country_code === 'GB');
+            const lonCode = lons[0].code;
+
+            const data = await axios.get('https://api.npoint.io/cf06c4767429ca337264');
+            const lonAirports =  data.data.filter(airport => airport.city_code === lonCode && airport.iata_type === 'airport' && airport.flightable === true);
+            const lonAirportCodes = lonAirports.map(airport => airport.code);
+            console.log(lonAirports);
+            console.log(lonAirportCodes);
+
+            for (let aCode of lonAirportCodes) {
+                
+                // await new Promise(resolve => setTimeout(resolve, 5000));
+
+                const params = {
+                    access_key: '5f8bb73bf843d5c5441e420597322ae3',
+                    dep_iata: aCode
+                }
+                
+                try {
+                    const response = await axios.get('http://api.aviationstack.com/v1/flights', {params});
+                    const result = response.data.data;
+                    console.log(result[0]);
+                } catch (err) {
+                    console.error(err);
+                }
+            }
         }
         fetchData();
     }, []);
