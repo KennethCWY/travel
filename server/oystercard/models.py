@@ -14,7 +14,6 @@ class Trip(models.Model):
 
 
 class Flight(models.Model):
-    user = models.ForeignKey(User, related_name='flights', on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, related_name='flights', on_delete=models.CASCADE)
     airline = models.CharField(max_length=100)
     location = models.CharField(max_length=100, null=False)
@@ -30,7 +29,6 @@ class Flight(models.Model):
 
 
 class Experience(models.Model):
-    user = models.ForeignKey(User, related_name='experiences', on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, related_name='experiences', on_delete=models.CASCADE)
     category = models.CharField(
         max_length=10,
