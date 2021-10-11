@@ -32,7 +32,7 @@ function SearchBar() {
         } catch (err) {
             console.log(err);
         }
-        setLocation('');
+        setDestination('');
     }
 
     return (
