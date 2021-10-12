@@ -60,3 +60,13 @@ export const updateCountry = country => {
 export const updateCountryCode = code => {
     return { type: UPDATE_COUNTRY_CODE, payload: code };
 };
+
+export function randomiseArray(arr) {
+    
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor((i+1) * Math.random());
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+
+    return arr
+}

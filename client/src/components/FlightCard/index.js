@@ -1,12 +1,15 @@
 import React from "react"
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
 
 import "./style.css";
+import { addFlight, randomiseArray } from '../../redux/actions.js'
 
 function FlightCard() {
     
+    let flights = [];
+    const dispatch = useDispatch();
     const cityName = useSelector(store => store.city);
     const countryCode = useSelector(store => store.countryCode);
 
@@ -35,13 +38,12 @@ function FlightCard() {
                 try {
                     const flightsData = await axios.get('http://api.aviationstack.com/v1/flights', {params});
                     const scheduledFlights = flightsData.data.data.filter(flight => flight.flight_status === 'scheduled');
-                    const flight = scheduledFlights[0]
-                    console.log(flight);
+                    flights.push(...scheduledFlights);
                 } catch (err) {
                     console.error(err);
                 }
             }
-
+            dispatch(addFlight(randomiseArray(flights)));
         }
         fetchData();
     }, []);
