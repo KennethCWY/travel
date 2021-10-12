@@ -8,7 +8,9 @@ import {
     UPDATE_COORDINATES,
     UPDATE_COUNTRY,
     UPDATE_COUNTRY_CODE,
+    UPDATE_DEPARTURE_DETAILS,
     UPDATE_DESTINATION,
+    UPDATE_DESTINATION_DETAILS,
     UPDATE_TRIP_DETAILS
 } from './constants';
 
@@ -49,24 +51,19 @@ export const updateCoordinates = coordinates => {
     return { type: UPDATE_COORDINATES, payload: coordinates };
 };
 
-export const updateCity = city => {
-    return { type: UPDATE_CITY, payload: city };
+export const updateDepartureDetails = (city, country, countryCode) => {
+    return { type: UPDATE_DEPARTURE_DETAILS, payload: { city, country, countryCode } };
 };
 
-export const updateCountry = country => {
-    return { type: UPDATE_COUNTRY, payload: country };
-};
-
-export const updateCountryCode = code => {
-    return { type: UPDATE_COUNTRY_CODE, payload: code };
+export const updateDestinationDetails = (city, country, countryCode) => {
+    return { type: UPDATE_DESTINATION_DETAILS, payload: { city, country, countryCode } };
 };
 
 export function randomiseArray(arr) {
-    
     for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor((i+1) * Math.random());
+        const j = Math.floor((i + 1) * Math.random());
         [arr[i], arr[j]] = [arr[j], arr[i]];
     }
 
-    return arr
+    return arr;
 }
