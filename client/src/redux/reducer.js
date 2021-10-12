@@ -4,11 +4,10 @@ import {
     ADD_HOTEL,
     ADD_RESTAURANT,
     UPDATE_BOUNDS,
-    UPDATE_CITY,
     UPDATE_COORDINATES,
-    UPDATE_COUNTRY,
-    UPDATE_COUNTRY_CODE,
+    UPDATE_DEPARTURE_DETAILS,
     UPDATE_DESTINATION,
+    UPDATE_DESTINATION_DETAILS,
     UPDATE_TRIP_DETAILS
 } from './constants';
 
@@ -24,9 +23,13 @@ const initialState = {
     attractions: [],
 
     // Related to Flights
-    city: '',
-    country: '',
-    countryCode: '',
+    departureCity: '',
+    departureCountry: '',
+    departureCountryCode: '',
+
+    destinationCity: '',
+    destinationCountry: '',
+    destinationCountryCode: '',
 
     // Related to Places API
     bounds: {},
@@ -58,12 +61,20 @@ const tripReducer = (state = initialState, { payload, type }) => {
             return { ...state, bounds: payload };
         case UPDATE_COORDINATES:
             return { ...state, coordinates: payload };
-        case UPDATE_CITY:
-            return { ...state, city: payload };
-        case UPDATE_COUNTRY:
-            return { ...state, country: payload };
-        case UPDATE_COUNTRY_CODE:
-            return { ...state, countryCode: payload };
+        case UPDATE_DEPARTURE_DETAILS:
+            return {
+                ...state,
+                departureCity: payload.city,
+                departureCountry: payload.country,
+                departureCountryCode: payload.countryCode
+            };
+        case UPDATE_DESTINATION_DETAILS:
+            return {
+                ...state,
+                destinationCity: payload.city,
+                destinationCountry: payload.country,
+                destinationCountryCode: payload.countryCode
+            };
         default:
             return state;
     }
