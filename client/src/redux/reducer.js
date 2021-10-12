@@ -14,6 +14,7 @@ import {
 
 const initialState = {
     tripId: '',
+    tripCardId: '',
     departure: '',
     destination: '',
     departureDate: '',
@@ -46,6 +47,7 @@ const tripReducer = (state = initialState, { payload, type }) => {
         case UPDATE_TRIP_DETAILS:
             return {
                 ...state,
+                tripCardId: payload.tripCardId,
                 tripId: payload.tripId,
                 departureDate: payload.departureDate,
                 returnDate: payload.returnDate
