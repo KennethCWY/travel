@@ -1,10 +1,11 @@
 import {
-    ADD_ATTRACTION,
-    ADD_FLIGHT,
-    ADD_HOTEL,
-    ADD_RESTAURANT,
+    ADD_ATTRACTIONS,
+    ADD_FLIGHTS,
+    ADD_HOTELS,
+    ADD_RESTAURANTS,
     UPDATE_BOUNDS,
     UPDATE_COORDINATES,
+    UPDATE_DEPARTURE,
     UPDATE_DEPARTURE_DETAILS,
     UPDATE_DESTINATION,
     UPDATE_DESTINATION_DETAILS,
@@ -40,6 +41,8 @@ const tripReducer = (state = initialState, { payload, type }) => {
     switch (type) {
         case UPDATE_DESTINATION:
             return { ...state, destination: payload };
+        case UPDATE_DEPARTURE:
+            return { ...state, departure: payload };
         case UPDATE_TRIP_DETAILS:
             return {
                 ...state,
@@ -49,14 +52,14 @@ const tripReducer = (state = initialState, { payload, type }) => {
                 departureDate: payload.departureDate,
                 returnDate: payload.returnDate
             };
-        case ADD_FLIGHT:
-            return { ...state, flights: [...state.flights, payload] };
-        case ADD_HOTEL:
-            return { ...state, hotels: [...state.hotels, payload] };
-        case ADD_RESTAURANT:
-            return { ...state, restaurants: [...state.restaurants, payload] };
-        case ADD_ATTRACTION:
-            return { ...state, attractions: [...state.attractions, payload] };
+        case ADD_FLIGHTS:
+            return { ...state, flights: payload };
+        case ADD_HOTELS:
+            return { ...state, hotels: payload };
+        case ADD_RESTAURANTS:
+            return { ...state, restaurants: payload };
+        case ADD_ATTRACTIONS:
+            return { ...state, attractions: payload };
         case UPDATE_BOUNDS:
             return { ...state, bounds: payload };
         case UPDATE_COORDINATES:
