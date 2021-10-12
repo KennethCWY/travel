@@ -26,12 +26,21 @@ const Explore = () => {
         history.push('/flights');
     };
 
-    const formatLocationAddress = place => {
+    const formatLocationAddress = async place => {
         const addressComponents = place.address_components;
         const formattedAddress = place.formatted_address;
-        const city = addressComponents[1].long_name;
-        const country = addressComponents.at(-1).long_name;
-        const countryCode = addressComponents.at(-1).short_name;
+
+        const countryComponent = await addressComponents.find(component =>
+            component.types.includes('country')
+        );
+
+        const cityComponent = await addressComponents.find(component =>
+            component.types.includes('locality')
+        );
+
+        const country = countryComponent.long_name;
+        const countryCode = countryComponent.short_name;
+        const city = cityComponent.long_name;
 
         dispatch(updateDestination(formattedAddress));
         dispatch(updateCity(city));
