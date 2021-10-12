@@ -31,19 +31,13 @@ const Explore = () => {
         const formattedAddress = place.formatted_address;
         const city = addressComponents[1].long_name;
         const country = formattedAddress.split(', ').at(-1);
+        const countryCode = addressComponents.at(-1).short_name;
 
+        dispatch(updateDestination(formattedAddress));
         dispatch(updateCity(city));
         dispatch(updateCountry(country));
+        dispatch(updateCountryCode(countryCode));
 
-        // Checks to see which address component has the country in order to get the country's short name
-        for (const component of addressComponents) {
-            if (component.long_name === country) {
-                const countryCode = component.short_name;
-                dispatch(updateCountryCode(countryCode));
-            }
-        }
-
-        dispatch(updateDestination(formattedAddress))
         history.push('/flights');
     };
 
