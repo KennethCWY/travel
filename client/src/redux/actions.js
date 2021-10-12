@@ -21,11 +21,11 @@ export const updateDeparture = departure => {
 };
 
 export const updateTripDetails = trip => {
-    const { tripId, departure, destination, departureDate, returnDate } = trip;
+    const { tripId, departureDate, returnDate } = trip;
 
     return {
         type: UPDATE_TRIP_DETAILS,
-        payload: { tripId, departure, destination, departureDate, returnDate }
+        payload: { tripId, departureDate, returnDate }
     };
 };
 
