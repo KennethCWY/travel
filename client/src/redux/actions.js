@@ -1,10 +1,11 @@
 import {
-    ADD_ATTRACTION,
-    ADD_FLIGHT,
-    ADD_HOTEL,
-    ADD_RESTAURANT,
+    ADD_ATTRACTIONS,
+    ADD_FLIGHTS,
+    ADD_HOTELS,
+    ADD_RESTAURANTS,
     UPDATE_BOUNDS,
     UPDATE_COORDINATES,
+    UPDATE_DEPARTURE,
     UPDATE_DEPARTURE_DETAILS,
     UPDATE_DESTINATION,
     UPDATE_DESTINATION_DETAILS,
@@ -15,29 +16,33 @@ export const updateDestination = destination => {
     return { type: UPDATE_DESTINATION, payload: destination };
 };
 
+export const updateDeparture = departure => {
+    return { type: UPDATE_DEPARTURE, payload: departure };
+};
+
 export const updateTripDetails = trip => {
-    const { tripId, departure, destination, departureDate, returnDate } = trip;
+    const { tripId, departureDate, returnDate } = trip;
 
     return {
         type: UPDATE_TRIP_DETAILS,
-        payload: { tripId, departure, destination, departureDate, returnDate }
+        payload: { tripId, departureDate, returnDate }
     };
 };
 
-export const addFlight = flight => {
-    return { type: ADD_FLIGHT, payload: flight };
+export const addFlights = flights => {
+    return { type: ADD_FLIGHTS, payload: flights };
 };
 
-export const addHotel = hotel => {
-    return { type: ADD_HOTEL, payload: hotel };
+export const addHotels = hotels => {
+    return { type: ADD_HOTELS, payload: hotels };
 };
 
-export const addRestaurant = restaurant => {
-    return { type: ADD_RESTAURANT, payload: restaurant };
+export const addRestaurants = restaurants => {
+    return { type: ADD_RESTAURANTS, payload: restaurants };
 };
 
-export const addAttraction = attraction => {
-    return { type: ADD_ATTRACTION, payload: attraction };
+export const addAttractions = attractions => {
+    return { type: ADD_ATTRACTIONS, payload: attractions };
 };
 
 export const updateBounds = bounds => {
