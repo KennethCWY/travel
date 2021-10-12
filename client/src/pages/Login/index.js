@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Token from '../../auth';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import jwt from 'jwt-decode'
 
 const Login = () => {
     const history = useHistory();
@@ -24,7 +25,6 @@ const Login = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(formData);
 
         Token.post(`token/`, {
             email: formData.email,
@@ -34,9 +34,9 @@ const Login = () => {
             localStorage.setItem('refresh_token', res.data.refresh);
             Token.defaults.headers['Authorization'] =
                 'JWT ' + localStorage.getItem('access_token');
+            const {user_id} = jwt(res.data.access)
+            localStorage.setItem('user_id', user_id)
             history.push('/');
-            console.log(res);
-            console.log(res.data);
         });
     };
 
