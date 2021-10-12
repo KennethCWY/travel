@@ -1,12 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
-import {
-    updateCity,
-    updateCountry,
-    updateCountryCode,
-    updateDestination
-} from '../../redux/actions';
+import { updateDestinationDetails, updateDestination } from '../../redux/actions';
 import './style.css';
 
 const ExploreImages = () => {
@@ -14,9 +9,7 @@ const ExploreImages = () => {
     const dispatch = useDispatch();
 
     const handleClick = (city, country, countryCode) => {
-        dispatch(updateCity(city));
-        dispatch(updateCountry(country));
-        dispatch(updateCountryCode(countryCode));
+        dispatch(updateDestinationDetails(city, country, countryCode))
         dispatch(updateDestination(`${city}, ${country}`));
         history.push('/flights');
     };
