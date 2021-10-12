@@ -1,10 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Trip(models.Model):
     trip_id = models.CharField(max_length=30, unique=True, verbose_name='Trip ID')
-    user = models.ForeignKey(User, related_name='trips', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='trips', on_delete=models.CASCADE)
     destination = models.CharField(max_length=100, null=False)
     departure_date = models.DateTimeField()
     return_date = models.DateTimeField()
@@ -52,7 +53,7 @@ class Experience(models.Model):
 
 
 class FlightReaction(models.Model):
-    user = models.ForeignKey(User, related_name='flight_reactions', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='flight_reactions', on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, related_name='reactions', on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
     dislike = models.BooleanField(default=False)
@@ -63,7 +64,7 @@ class FlightReaction(models.Model):
 
 
 class ExperienceReaction(models.Model):
-    user = models.ForeignKey(User, related_name='experience_reactions', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experience_reactions', on_delete=models.CASCADE)
     experience = models.ForeignKey(Experience, related_name='reactions', on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
     dislike = models.BooleanField(default=False)
@@ -74,7 +75,7 @@ class ExperienceReaction(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, related_name='comments', on_delete=models.CASCADE)
     body = models.CharField(max_length=500)
     timestamp = models.DateTimeField(auto_now_add=True)
