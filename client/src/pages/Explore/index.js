@@ -30,7 +30,7 @@ const Explore = () => {
         const addressComponents = place.address_components;
         const formattedAddress = place.formatted_address;
         const city = addressComponents[1].long_name;
-        const country = formattedAddress.split(', ').at(-1);
+        const country = addressComponents.at(-1).long_name;
         const countryCode = addressComponents.at(-1).short_name;
         
         dispatch(updateDestination(formattedAddress));
