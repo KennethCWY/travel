@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Autocomplete } from '@react-google-maps/api';
 import { nanoid } from 'nanoid';
@@ -23,11 +24,30 @@ function SearchBar() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
         const departureDate = e.target.departuredate.value;
         const returnDate = e.target.arrivaldate.value;
+        const destination = e.target.destination.value
+        const departure = e.target.departure.value
         const tripId = nanoid(7);
-        dispatch(updateTripDetails({tripId, departureDate, returnDate}));
-        history.push('/flights');
+        const userId = localStorage.getItem("user_id")
+        const formData = {trip_id: tripId, departure_date: departureDate, return_date: returnDate, destination: destination, departure: departure, user: userId}
+        const token = localStorage.getItem("access_token")
+        console.log(formData)
+        console.log(token)
+        console.log(departureDate, returnDate)
+
+        const { data } = await axios.post('http://localhost:8000/api/trips/', formData, {
+            headers: {
+                'Authorization': `JWT ${token}`,
+                'Content-Type': 'application/json'
+            },
+        })
+
+        console.log(data)
+        dispatch(updateTripDetails({tripId: data.id, tripCardId: data.trip_id, departureDate, returnDate}));
+
+        
     }
 
     const formatDestinationAddress = async place => {
@@ -49,7 +69,6 @@ function SearchBar() {
         dispatch(updateDestination(formattedAddress));
         dispatch(updateDestinationDetails(city, country, countryCode));
 
-        // history.push('/flights');
     };
 
     const handleDestinationChanged = () => {
