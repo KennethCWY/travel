@@ -3,14 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Autocomplete } from '@react-google-maps/api';
 import { ExploreImages } from '../../components';
-import {
-    updateBounds,
-    updateCity,
-    updateCoordinates,
-    updateCountry,
-    updateCountryCode,
-    updateDestination
-} from '../../redux/actions';
+import { updateDestination, updateDestinationDetails, updateBounds, updateCoordinates } from '../../redux/actions';
 import './style.css';
 
 const Explore = () => {
@@ -43,9 +36,7 @@ const Explore = () => {
         const city = cityComponent.long_name;
 
         dispatch(updateDestination(formattedAddress));
-        dispatch(updateCity(city));
-        dispatch(updateCountry(country));
-        dispatch(updateCountryCode(countryCode));
+        dispatch(updateDestinationDetails(city, country, countryCode))
 
         history.push('/flights');
     };
