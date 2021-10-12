@@ -1,41 +1,49 @@
 import React from "react"
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
 
 import "./style.css";
+import { addFlight, randomiseArray } from '../../redux/actions.js'
 
 function FlightCard() {
+    
+    let flights = [];
+    const dispatch = useDispatch();
+    const cityName = useSelector(store => store.city);
+    const countryCode = useSelector(store => store.countryCode);
 
     useEffect(() => {
         async function fetchData() {
+            console.log(cityName);
+            console.log(countryCode);
 
             const cityData = await axios.get('https://api.npoint.io/5f5a6588530da581be26');
-            const lons = cityData.data.filter(city => city.name === 'London' && city.country_code === 'GB');
-            const lonCode = lons[0].code;
+            const cityArr = cityData.data.filter(city => city.name === cityName && city.country_code === countryCode);
+            const cityCode = cityArr[0].code;
 
-            const data = await axios.get('https://api.npoint.io/cf06c4767429ca337264');
-            const lonAirports =  data.data.filter(airport => airport.city_code === lonCode && airport.iata_type === 'airport' && airport.flightable === true);
-            const lonAirportCodes = lonAirports.map(airport => airport.code);
-            console.log(lonAirports);
-            console.log(lonAirportCodes);
+            const airportData = await axios.get('https://api.npoint.io/cf06c4767429ca337264');
+            const airports =  airportData.data.filter(airport => airport.city_code === cityCode && airport.iata_type === 'airport' && airport.flightable === true);
+            const airportCodes = airports.map(airport => airport.code);
+            console.log(airports);
+            console.log(airportCodes);
 
-            for (let aCode of lonAirportCodes) {
+            for (let aCode of airportCodes) {
                 
-                // await new Promise(resolve => setTimeout(resolve, 5000));
-
                 const params = {
                     access_key: '5f8bb73bf843d5c5441e420597322ae3',
                     dep_iata: aCode
                 }
                 
                 try {
-                    const response = await axios.get('http://api.aviationstack.com/v1/flights', {params});
-                    const result = response.data.data;
-                    console.log(result[0]);
+                    const flightsData = await axios.get('http://api.aviationstack.com/v1/flights', {params});
+                    const scheduledFlights = flightsData.data.data.filter(flight => flight.flight_status === 'scheduled');
+                    flights.push(...scheduledFlights);
                 } catch (err) {
                     console.error(err);
                 }
             }
+            dispatch(addFlight(randomiseArray(flights)));
         }
         fetchData();
     }, []);
