@@ -1,13 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Trip(models.Model):
     trip_id = models.CharField(max_length=30, unique=True, verbose_name='Trip ID')
-    user = models.ForeignKey(User, related_name='trips', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='trips', on_delete=models.CASCADE)
     destination = models.CharField(max_length=100, null=False)
-    departure_date = models.DateTimeField()
-    return_date = models.DateTimeField()
+    departure_date = models.CharField(max_length=30)
+    return_date = models.CharField(max_length=30)
 
     def __str__(self):
         return self.destination
@@ -20,8 +21,8 @@ class Flight(models.Model):
     destination = models.CharField(max_length=100, null=False)
     departure_airport = models.CharField(max_length=200, null=False)
     arrival_airport = models.CharField(max_length=200, null=False)
-    scheduled_departure = models.DateTimeField()
-    scheduled_arrival = models.DateTimeField()
+    scheduled_departure = models.CharField(max_length=30)
+    scheduled_arrival = models.CharField(max_length=30)
     duration = models.IntegerField(null=False)
 
     def __str__(self):
@@ -52,32 +53,32 @@ class Experience(models.Model):
 
 
 class FlightReaction(models.Model):
-    user = models.ForeignKey(User, related_name='flight_reactions', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='flight_reactions', on_delete=models.CASCADE)
     flight = models.ForeignKey(Flight, related_name='reactions', on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
     dislike = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.CharField(max_length=30)
 
     def __str__(self):
         return f'{self.user.username} {"liked" if self.like == True else "disliked"} {self.flight.name} flight'
 
 
 class ExperienceReaction(models.Model):
-    user = models.ForeignKey(User, related_name='experience_reactions', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='experience_reactions', on_delete=models.CASCADE)
     experience = models.ForeignKey(Experience, related_name='reactions', on_delete=models.CASCADE)
     like = models.BooleanField(default=False)
     dislike = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.CharField(max_length=30)
 
     def __str__(self):
         return f'{self.user.username} {"liked" if self.like == True else "disliked"} {self.experience.name} experience'
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='comments', on_delete=models.CASCADE)
     trip = models.ForeignKey(Trip, related_name='comments', on_delete=models.CASCADE)
     body = models.CharField(max_length=500)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.CharField(max_length=30)
 
     def __str__(self):
         return self.body
