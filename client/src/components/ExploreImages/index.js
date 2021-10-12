@@ -1,38 +1,23 @@
-import React, { useState } from 'react';
-import './style.css';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import {
+    updateCity,
+    updateCountry,
+    updateCountryCode,
+    updateDestination
+} from '../../redux/actions';
+import './style.css';
 
 const ExploreImages = () => {
-    const [location, setLocation] = useState('');
     const history = useHistory();
+    const dispatch = useDispatch();
 
-    const redirectDubai = () => {
-        setLocation('Dubai');
-        history.push('/flights');
-    };
-
-    const redirectItaly = () => {
-        setLocation('Italy');
-        history.push('/flights');
-    };
-
-    const redirectNorway = () => {
-        setLocation('Norway');
-        history.push('/flights');
-    };
-
-    const redirectTokyo = () => {
-        setLocation('Tokyo');
-        history.push('/flights');
-    };
-
-    const redirectIndia = () => {
-        setLocation('India');
-        history.push('/flights');
-    };
-
-    const redirectGreece = () => {
-        setLocation('Greece');
+    const handleClick = (city, country, countryCode) => {
+        dispatch(updateCity(city));
+        dispatch(updateCountry(country));
+        dispatch(updateCountryCode(countryCode));
+        dispatch(updateDestination(`${city}, ${country}`));
         history.push('/flights');
     };
 
@@ -44,14 +29,14 @@ const ExploreImages = () => {
                         src="https://glitterrebel.com/wp-content/uploads/2020/05/best-luxury-yacht-tours-in-dubai-hero.jpg"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="Dubai"
-                        onClick={redirectDubai}
+                        onClick={() => handleClick('Dubai', 'United Arab Emirates', 'AE')}
                     />
 
                     <img
                         src="https://www.lifeinnorway.net/wp-content/uploads/2018/02/norwegian-lifestyle-facts.jpg"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="Norway"
-                        onClick={redirectNorway}
+                        onClick={() => handleClick('Oslo', 'Norway', 'NO')}
                     />
                 </div>
 
@@ -60,14 +45,14 @@ const ExploreImages = () => {
                         src="https://lp-cms-production.imgix.net/features/2017/11/GettyRF_543346423-1-ab159824d5bd.jpg?auto=compress&fit=crop&fm=auto&sharp=10&vib=20&w=1200&h=800"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="Italy"
-                        onClick={redirectItaly}
+                        onClick={() => handleClick('Milan', 'Italy', 'IT')}
                     />
 
                     <img
                         src="https://p0.piqsels.com/preview/660/121/257/taj-mahal-agra-india-during-daytime.jpg"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="India"
-                        onClick={redirectIndia}
+                        onClick={() => handleClick('Agra', 'India', 'IN')}
                     />
                 </div>
 
@@ -76,14 +61,14 @@ const ExploreImages = () => {
                         src="https://cdn.pixabay.com/photo/2020/03/18/02/29/tokyo-4942411_1280.jpg"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="Tokyo"
-                        onClick={redirectTokyo}
+                        onClick={() => handleClick('Tokyo', 'Japan', 'JP')}
                     />
 
                     <img
                         src="https://live.staticflickr.com/4688/38051518795_b3aafa8858_b.jpg"
                         className="w-100 shadow-1-strong rounded mb-4"
                         alt="Greece"
-                        onClick={redirectGreece}
+                        onClick={() => handleClick('Santorini', 'Greece', 'GR')}
                     />
                 </div>
             </div>
