@@ -47,8 +47,6 @@ const tripReducer = (state = initialState, { payload, type }) => {
             return {
                 ...state,
                 tripId: payload.tripId,
-                departure: payload.departure,
-                destination: payload.destination,
                 departureDate: payload.departureDate,
                 returnDate: payload.returnDate
             };
@@ -66,7 +64,8 @@ const tripReducer = (state = initialState, { payload, type }) => {
             return { ...state, coordinates: payload };
         case UPDATE_DEPARTURE_DETAILS:
             return {
-                ...state,
+                ...state, 
+                departure: `${payload.city}, ${payload.country}`,
                 departureCity: payload.city,
                 departureCountry: payload.country,
                 departureCountryCode: payload.countryCode
@@ -74,6 +73,7 @@ const tripReducer = (state = initialState, { payload, type }) => {
         case UPDATE_DESTINATION_DETAILS:
             return {
                 ...state,
+                destination: `${payload.city}, ${payload.country}`,
                 destinationCity: payload.city,
                 destinationCountry: payload.country,
                 destinationCountryCode: payload.countryCode
