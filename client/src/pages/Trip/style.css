@@ -2,3 +2,9 @@
   padding-top: 80px;
   text-align: center;
 }
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
