@@ -5,3 +5,4 @@ export { default as FlightCard } from './FlightCard';
 export { default as Logout } from './Logout';
 export { default as PrivateRoute } from './PrivateRoute';
 export { default as Restaurants } from './Restaurants';
+export { default as Attractions } from './Attractions';
