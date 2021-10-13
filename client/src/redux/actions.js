@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
     ADD_ATTRACTIONS,
     ADD_FLIGHTS,
@@ -68,4 +70,50 @@ export function randomiseArray(arr) {
     }
 
     return arr;
+}
+
+export async function fetchFlights(depCityName, depCountryCode, destCityName, destCountryCode) {
+
+    // const REACT_APP_AVIATIONSTACK_API_KEY = process.env.REACT_APP_AVIATIONSTACK_API_KEY;
+    // console.log(REACT_APP_AVIATIONSTACK_API_KEY);
+
+    let flights = [];
+
+    const depCityData = await axios.get('https://api.npoint.io/5f5a6588530da581be26');
+    const depCityArr = depCityData.data.filter(city => city.name === depCityName && city.country_code === depCountryCode);
+    const depCityCode = depCityArr[0].code;
+
+    const depAirportData = await axios.get('https://api.npoint.io/cf06c4767429ca337264');
+    const depAirports =  depAirportData.data.filter(airport => airport.city_code === depCityCode && airport.iata_type === 'airport' && airport.flightable === true);
+    const depAirportCodes = depAirports.map(airport => airport.code);
+
+    const destCityData = await axios.get('https://api.npoint.io/5f5a6588530da581be26');
+    const destCityArr = destCityData.data.filter(city => city.name === destCityName && city.country_code === destCountryCode);
+    const destCityCode = destCityArr[0].code;
+    
+    const destAirportData = await axios.get('https://api.npoint.io/cf06c4767429ca337264');
+    const destAirports =  destAirportData.data.filter(airport => airport.city_code === destCityCode && airport.iata_type === 'airport' && airport.flightable === true);
+    const destAirportCodes = destAirports.map(airport => airport.code);
+
+    for (let depAirportCode of depAirportCodes) {
+        
+        for (let destAirportCode of destAirportCodes) {
+
+            const params = {
+                access_key: '89366708281455bcbbb0df3af3318f35',
+                dep_iata: depAirportCode,
+                arr_iata: destAirportCode
+            }
+            
+            try {
+                const flightsData = await axios.get('http://api.aviationstack.com/v1/flights', {params});
+                const scheduledFlights = flightsData.data.data.filter(flight => flight.flight_status === 'scheduled');
+                flights.push(...scheduledFlights);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    return randomiseArray(flights)
 }
