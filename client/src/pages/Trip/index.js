@@ -1,28 +1,52 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
-import "./style.css";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import Moment from 'react-moment';
+import { useParams } from 'react-router-dom';
+import { HotelCard } from '../../components';
+import './style.css';
 
 const Trip = () => {
-  const location = useLocation();
-  let header;
-  let tripcard;
+    const { tripId } = useParams();
+    const [trip, setTrip] = useState({});
+    const [hotels, setHotels] = useState([]);
+    const [restaurants, setRestaurants] = useState([]);
+    const [attractions, setAttractions] = useState([]);
 
-  if (location.pathname === "/creatortrip") {
-    header = "Creator Trip";
-    tripcard = "Trip Card Info Here";
-  } else if (location.pathname === "/yourtrip") {
-    header = "Your Trip";
-    tripcard = "Trip Card Info with Reactions Here";
-  }
+    useEffect(() => {
+        const getTripInfo = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:8000/api/trips/${tripId}/`);
+                setTrip(data);
+                setHotels(data.experiences.filter(experience => experience.category === 'hotel'));
+                setRestaurants(data.experiences.filter(experience => experience.category === 'restaurant'));
+                setAttractions(data.experiences.filter(experience => experience.category === 'attraction'));
+            } catch (error) {
+                console.error('GET TRIP DETAILS ', error);
+            }
+        };
 
-  return (
-    <div className="trip-container">
-      <h1>{header}</h1>
-      <div className="card">
-        <div className="card-body">{tripcard}</div>
-      </div>
-    </div>
-  );
+        getTripInfo();
+    }, [tripId]);
+
+    return (
+        <div className="trip-container">
+            <h1>{trip.destination}</h1>
+
+            {/* Trip Details */}
+            <div className="flex-row">
+                <Moment format="Do MMM YYYY">{trip.departureDate}</Moment>
+                <span> - </span>
+                <Moment format="Do MMM YYYY">{trip.returnDate}</Moment>
+            </div>
+
+            {/* Hotels */}
+            <div className="flex-container">
+                {hotels.map(hotel => (
+                    <HotelCard hotel={hotel} key={hotel.id} />
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default Trip;
