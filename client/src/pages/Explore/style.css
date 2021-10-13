@@ -1,0 +1,30 @@
+h2 {
+  padding-left: 75px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em 0 2em 0;
+}
+
+input {
+    border: solid 1px black;
+    border-radius: 5px;
+    font-size: 1.3em;
+    padding: 0.25em;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fffcf7;
+}
+
+input[type='text']:focus {
+    outline: solid 1px gray;
+}
+
+#submit-btn {
+    background-color: black;
+    color: white;
+}
