@@ -34,7 +34,9 @@ const Restaurants = () => {
             address: restaurant.address,
             website_link: restaurant.website,
             tripadvisor_link: restaurant.web_url,
-            cuisine: cuisine.join(', ')
+            cuisine: cuisine.join(', '),
+            price: restaurant.price,
+            ranking: restaurant.ranking
         };
 
         try {
@@ -47,7 +49,7 @@ const Restaurants = () => {
     return (
         <div className="d-flex flex-row flex-container">
             {restaurants?.map(restaurant => (
-                <div className="container">
+                <div className="container" key={restaurant.location_id}>
                     <img src={restaurant.photo.images.large.url} alt={restaurant.name} />
                     <h2>{restaurant.name}</h2>
                     <p>Rating: {Number(restaurant.rating)}</p>
@@ -58,7 +60,7 @@ const Restaurants = () => {
                     {restaurant.website && <a href={restaurant.website}>Website</a>}
                     {restaurant.web_url && <a href={restaurant.web_url}>Tripadvisor link</a>}
                     {restaurant?.cuisine.map(cuisine => (
-                        <p>{cuisine.name}</p>
+                        <p key={cuisine.name}>{cuisine.name}</p>
                     ))}
                     <button onClick={() => addRestaurantToTrip(restaurant)}>
                         Add to Trip

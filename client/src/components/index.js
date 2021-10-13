@@ -6,4 +6,5 @@ export { default as Logout } from './Logout';
 export { default as PrivateRoute } from './PrivateRoute';
 export { default as Restaurants } from './Restaurants';
 export { default as Attractions } from './Attractions';
+export { default as HotelCard } from './HotelCard';
 export { default as Comments } from './Comments';
