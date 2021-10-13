@@ -1,0 +1,14 @@
+#comment {
+    width: 40%;
+    height: 100px;
+    padding: 10px;
+    background-color: #F0F8FF;
+    resize: none;
+}
+
+#submit-btn {
+    
+    font-size: 15px;
+    text-transform: uppercase;
+    width: 80px;
+}
