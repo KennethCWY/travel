@@ -25,7 +25,7 @@ const App = () => {
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/explore" component={Explore} />
                 <PrivateRoute path="/flights" component={Flights} />
-                <PrivateRoute path="/accommodation" component={Accommodation} />
+                <PrivateRoute path="/hotels" component={Accommodation} />
                 <PrivateRoute path="/experiences" component={Experiences} />
                 <PrivateRoute path="/creatortrip" component={Trip} />
                 <PrivateRoute path="/yourtrip" component={Trip} />
