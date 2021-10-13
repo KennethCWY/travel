@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { useParams } from 'react-router-dom';
-import { HotelCard } from '../../components';
+import { HotelCard, AttractionCard, CommentsForm, Comments } from '../../components';
 import './style.css';
 
 const Trip = () => {
@@ -11,15 +11,24 @@ const Trip = () => {
     const [hotels, setHotels] = useState([]);
     const [restaurants, setRestaurants] = useState([]);
     const [attractions, setAttractions] = useState([]);
+    const [comments, setComments] = useState();
 
     useEffect(() => {
         const getTripInfo = async () => {
             try {
                 const { data } = await axios.get(`http://localhost:8000/api/trips/${tripId}/`);
                 setTrip(data);
-                setHotels(data.experiences.filter(experience => experience.category === 'hotel'));
-                setRestaurants(data.experiences.filter(experience => experience.category === 'restaurant'));
-                setAttractions(data.experiences.filter(experience => experience.category === 'attraction'));
+                setHotels(
+                    data.experiences.filter(experience => experience.category === 'hotel')
+                );
+                setRestaurants(
+                    data.experiences.filter(experience => experience.category === 'restaurant')
+                );
+                setAttractions(
+                    data.experiences.filter(experience => experience.category === 'attraction')
+                );
+                setComments(data.comments.body);
+                console.log(comments);
             } catch (error) {
                 console.error('GET TRIP DETAILS ', error);
             }
@@ -44,6 +53,23 @@ const Trip = () => {
                 {hotels.map(hotel => (
                     <HotelCard hotel={hotel} key={hotel.id} />
                 ))}
+            </div>
+
+            {/* Attractions */}
+            {attractions.length ? <h2>Attractions</h2> : null}
+            <div className="flex-container">
+                {attractions.map(attraction => (
+                    <AttractionCard attraction={attraction} key={attraction.id} />
+                ))}
+            </div>
+
+            {/* Comments */}
+            <div>
+                <CommentsForm tripId={tripId} />
+                {comments}
+                {/* {comments.map(comment => (
+                    <Comments comment={comment} key={comment.id} />
+                ))} */}
             </div>
         </div>
     );
