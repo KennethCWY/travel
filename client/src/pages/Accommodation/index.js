@@ -14,7 +14,8 @@ const Accommodations = () => {
         const setAccommodationData = async () => {
             if (!bounds.sw && !bounds.ne) return;
             const hotels = await getPlacesData('hotels', bounds.sw, bounds.ne);
-            dispatch(addHotels(hotels));
+            const filteredHotels = hotels.filter(hotel => hotel.photo && hotel.price);
+            dispatch(addHotels(filteredHotels));
         };
 
         setAccommodationData();
@@ -27,7 +28,7 @@ const Accommodations = () => {
             name,
             rating,
             review_count: num_reviews,
-            image: photo ? photo.images.large.url : 'https://bit.ly/3BAUMBe'
+            image: photo.images.large.url
         };
 
         try {
@@ -40,15 +41,8 @@ const Accommodations = () => {
     return (
         <div>
             {hotels?.map(hotel => (
-                <div>
-                    <img
-                        src={
-                            hotel.photo
-                                ? hotel.photo.images.large.url
-                                : 'https://bit.ly/3BAUMBe'
-                        }
-                        alt={hotel.name}
-                    />
+                <div key={hotel.location_id}>
+                    <img src={hotel.photo.images.large.url} alt={hotel.name} />
                     <h2>{hotel.name}</h2>
                     <p>Rating: {Number(hotel.rating)}</p>
                     <p>Reviews: {hotel.num_reviews}</p>
