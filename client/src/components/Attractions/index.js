@@ -20,8 +20,6 @@ const Attractions = () => {
         setAttractionData();
     }, [bounds, dispatch]);
 
-    console.log('attractions ', attractions);
-
     const addAttractionToTrip = async (attraction) => {
         const attractionInfo = {
             trip: tripId,
@@ -35,7 +33,6 @@ const Attractions = () => {
             tripadvisor_link: attraction.web_url
         };
 
-
         try {
             await axios.post('http://localhost:8000/api/experiences/', attractionInfo);
         } catch (error) {
@@ -46,7 +43,7 @@ const Attractions = () => {
     return (
         <div className="d-flex flex-row flex-container">
             {attractions?.map(attraction => (
-                <div className="container">
+                <div className="container" key={attraction.location_id}>
                     <img src={attraction.photo.images.large.url} alt={attraction.name} />
                     <h2>{attraction.name}</h2>
                     <p>Rating: {Number(attraction.rating)}</p>
