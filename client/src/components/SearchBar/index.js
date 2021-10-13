@@ -46,7 +46,7 @@ function SearchBar() {
 
         console.log(data)
         dispatch(updateTripDetails({tripId: data.id, tripCardId: data.trip_id, departureDate, returnDate}));
-
+        history.push('/flights');
         
     }
 
