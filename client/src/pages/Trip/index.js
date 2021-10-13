@@ -2,7 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { useParams } from 'react-router-dom';
-import { HotelCard, AttractionCard, CommentsForm, Comments } from '../../components';
+import {
+    HotelCard,
+    RestaurantCard,
+    AttractionCard,
+    CommentsForm,
+    Comments
+} from '../../components';
 import './style.css';
 
 const Trip = () => {
@@ -49,9 +55,18 @@ const Trip = () => {
             </div>
 
             {/* Hotels */}
+            {hotels.length ? <h2>Hotels</h2> : null}
             <div className="flex-container">
                 {hotels.map(hotel => (
                     <HotelCard hotel={hotel} key={hotel.id} />
+                ))}
+            </div>
+
+            {/* Restaurants */}
+            {restaurants.length ? <h2>Restaurants</h2> : null}
+            <div className="flex-container">
+                {restaurants.map(restaurant => (
+                    <RestaurantCard restaurant={restaurant} key={restaurant.id} />
                 ))}
             </div>
 

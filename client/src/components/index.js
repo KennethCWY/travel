@@ -10,3 +10,4 @@ export { default as HotelCard } from './HotelCard';
 export { default as CommentsForm } from './CommentsForm';
 export { default as Comments } from './Comments';
 export { default as AttractionCard } from './AttractionCard';
+export { default as RestaurantCard } from './RestaurantCard';
