@@ -17,7 +17,7 @@ const Trip = () => {
     const [hotels, setHotels] = useState([]);
     const [restaurants, setRestaurants] = useState([]);
     const [attractions, setAttractions] = useState([]);
-    const [comments, setComments] = useState();
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const getTripInfo = async () => {
@@ -33,8 +33,8 @@ const Trip = () => {
                 setAttractions(
                     data.experiences.filter(experience => experience.category === 'attraction')
                 );
-                setComments(data.comments.body);
-                console.log(comments);
+
+                setComments(data.comments);
             } catch (error) {
                 console.error('GET TRIP DETAILS ', error);
             }
@@ -81,10 +81,12 @@ const Trip = () => {
             {/* Comments */}
             <div>
                 <CommentsForm tripId={tripId} />
-                {comments}
-                {/* {comments.map(comment => (
-                    <Comments comment={comment} key={comment.id} />
-                ))} */}
+
+                <div>
+                    {comments.map(comment => (
+                        <Comments comment={comment} key={comment.id} />
+                    ))}
+                </div>
             </div>
         </div>
     );
