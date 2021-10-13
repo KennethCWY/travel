@@ -34,7 +34,9 @@ const Restaurants = () => {
             address: restaurant.address,
             website_link: restaurant.website,
             tripadvisor_link: restaurant.web_url,
-            cuisine: cuisine.join(', ')
+            cuisine: cuisine.join(', '),
+            price: restaurant.price,
+            ranking: restaurant.ranking
         };
 
         try {

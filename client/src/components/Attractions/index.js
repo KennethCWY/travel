@@ -30,7 +30,9 @@ const Attractions = () => {
             image: attraction.photo.images.large.url,
             address: attraction.address,
             website_link: attraction.website,
-            tripadvisor_link: attraction.web_url
+            tripadvisor_link: attraction.web_url,
+            price: attraction.price,
+            ranking: attraction.ranking
         };
 
         try {

@@ -21,12 +21,14 @@ const Accommodations = () => {
         setAccommodationData();
     }, [bounds, dispatch]);
 
-    const addHotelToTrip = async ({ name, rating, num_reviews, photo }) => {
+    const addHotelToTrip = async ({ name, rating, num_reviews, photo, price, ranking }) => {
         const hotel = {
             trip: tripId,
             category: 'hotel',
             name,
             rating,
+            price,
+            ranking,
             review_count: num_reviews,
             image: photo.images.large.url
         };
