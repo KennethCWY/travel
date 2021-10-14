@@ -1,4 +1,15 @@
-const HotelCard = ({ hotel }) => {
+import useReactionInfo from '../../hooks/useReactionInfo';
+
+const HotelCard = ({ hotel, userReactions }) => {
+    const {
+        likeCount,
+        dislikeCount,
+        userHasLiked,
+        userHasDisliked,
+        handleLike,
+        handleDislike
+    } = useReactionInfo(hotel, userReactions);
+
     return (
         <div>
             <img src={hotel.image} alt={hotel.name} />
@@ -8,8 +19,12 @@ const HotelCard = ({ hotel }) => {
             {hotel.ranking && <p>Ranking: {hotel.ranking}</p>}
             {hotel.price && <p>Price range: {hotel.price}</p>}
             <div className="flex-row">
-                <button>Like</button>
-                <button>Dislike</button>
+                <span>{likeCount}</span>
+                <button onClick={handleLike}>{userHasLiked ? 'Unlike' : 'Like'}</button>
+                <span>{dislikeCount}</span>
+                <button onClick={handleDislike}>
+                    {userHasDisliked ? 'Neutral' : 'Dislike'}
+                </button>
             </div>
         </div>
     );
