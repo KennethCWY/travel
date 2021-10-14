@@ -100,7 +100,7 @@ export async function fetchFlights(depCityName, depCountryCode, destCityName, de
         for (let destAirportCode of destAirportCodes) {
 
             const params = {
-                access_key: '14865aaa4482e66b3fe9bd19f2690211',
+                access_key: 'c68068c8f3caf4ac252b2e3b0f877860',
                 limit: 1,
                 dep_iata: depAirportCode,
                 arr_iata: destAirportCode
