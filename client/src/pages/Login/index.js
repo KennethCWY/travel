@@ -3,6 +3,7 @@ import Token from '../../auth';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import jwt from 'jwt-decode'
+import './styles.css'
 
 const Login = () => {
     const history = useHistory();
@@ -41,15 +42,23 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="login">
+            <div className="login__spotlight">
+                <div className="login__text">
+                    <h1>Explore Beautiful Places</h1>
+                    <p>The simple way to plan your next vacation with friends</p>
+                </div>
+            </div>
+
+            {/* Login */}
             <form>
+            <h1>Login</h1>
                 <input
                     type="text"
                     required
                     id="email"
                     name="email"
-                    placeholder="email"
+                    placeholder="Email"
                     onChange={handleChange}
                 />
                 <input
@@ -57,7 +66,7 @@ const Login = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder="password"
+                    placeholder="Password"
                     onChange={handleChange}
                 />
                 <input type="submit" onClick={handleSubmit} value="Sign In" />

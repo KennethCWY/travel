@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { Autocomplete } from '@react-google-maps/api';
@@ -14,10 +14,13 @@ import {
     updateCoordinates,
     updateTripDetails
 } from '../../redux/actions';
+import explore from '../../assets/explore.jpg';
 
 function SearchBar() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const departureRef = useRef();
+    const returnRef = useRef();
 
     const [autocompleteDeparture, setAutocompleteDeparture] = useState(null);
     const [autocompleteDestination, setAutocompleteDestination] = useState(null);
@@ -27,21 +30,35 @@ function SearchBar() {
 
         const departureDate = e.target.departuredate.value;
         const returnDate = e.target.arrivaldate.value;
-        const destination = e.target.destination.value
-        const departure = e.target.departure.value
+        const destination = e.target.destination.value;
+        const departure = e.target.departure.value;
         const tripId = nanoid(7);
-        const userId = localStorage.getItem("user_id")
-        const formData = {trip_id: tripId, departure_date: departureDate, return_date: returnDate, destination: destination, departure: departure, user: userId}
-        const token = localStorage.getItem("access_token")
+        const userId = localStorage.getItem('user_id');
+        const formData = {
+            trip_id: tripId,
+            departure_date: departureDate,
+            return_date: returnDate,
+            destination: destination,
+            departure: departure,
+            user: userId
+        };
+        const token = localStorage.getItem('access_token');
 
         const { data } = await axios.post('http://localhost:8000/api/trips/', formData, {
             headers: {
-                'Authorization': `JWT ${token}`,
+                Authorization: `JWT ${token}`,
                 'Content-Type': 'application/json'
-            },
-        })
+            }
+        });
 
-        dispatch(updateTripDetails({tripId: data.id, tripCardId: data.trip_id, departureDate, returnDate}));
+        dispatch(
+            updateTripDetails({
+                tripId: data.id,
+                tripCardId: data.trip_id,
+                departureDate,
+                returnDate
+            })
+        );
         history.push('/hotels');
     }
 
@@ -107,50 +124,60 @@ function SearchBar() {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <Autocomplete
-                    onPlaceChanged={handleDepartureChanged}
-                    onLoad={term => setAutocompleteDeparture(term)}
-                >
+        <div className="explore">
+            <div className="explore__container">
+                <h1>Discover amazing things anywhere</h1>
+                <form onSubmit={handleSubmit}>
+                    <Autocomplete
+                        onPlaceChanged={handleDepartureChanged}
+                        onLoad={term => setAutocompleteDeparture(term)}
+                    >
+                        <input
+                            id="departure"
+                            name="departure"
+                            aria-label="departure"
+                            type="text"
+                            placeholder="Departure"
+                            required
+                        />
+                    </Autocomplete>
+                    <Autocomplete
+                        onPlaceChanged={handleDestinationChanged}
+                        onLoad={term => setAutocompleteDestination(term)}
+                    >
+                        <input
+                            id="destination"
+                            name="destination"
+                            aria-label="destination"
+                            type="text"
+                            placeholder="Destination"
+                            required
+                        />
+                    </Autocomplete>
                     <input
-                        id="departure"
-                        name="departure"
-                        aria-label="departure"
+                        id="departuredate"
+                        name="departuredate"
+                        aria-label="departuredate"
+                        ref={departureRef}
                         type="text"
-                        placeholder="Departure"
+                        placeholder="Departure Date"
+                        onFocus={() => (departureRef.current.type = 'date')}
                         required
                     />
-                </Autocomplete>
-                <Autocomplete
-                    onPlaceChanged={handleDestinationChanged}
-                    onLoad={term => setAutocompleteDestination(term)}
-                >
                     <input
-                        id="destination"
-                        name="destination"
-                        aria-label="destination"
+                        id="arrivaldate"
+                        name="arrivaldate"
+                        aria-label="arrivaldate"
+                        ref={returnRef}
                         type="text"
-                        placeholder="Destination"
+                        placeholder="Return Date"
+                        onFocus={() => (returnRef.current.type = 'date')}
                         required
                     />
-                </Autocomplete>
-                <input
-                    id="departuredate"
-                    name="departuredate"
-                    aria-label="departuredate"
-                    type="date"
-                    required
-                />
-                <input
-                    id="arrivaldate"
-                    name="arrivaldate"
-                    aria-label="arrivaldate"
-                    type="date"
-                    required
-                />
-                <input id="submit-btn" type="submit" value="Submit" />
-            </form>
+                    <input id="submit-btn" type="submit" value="Search" />
+                </form>
+            </div>
+            <img src={explore} alt="Explore" />
         </div>
     );
 }
