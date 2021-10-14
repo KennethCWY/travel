@@ -20,6 +20,7 @@ const Trip = () => {
     const [comments, setComments] = useState([]);
     const [tripCardId, setTripCardId] = useState();
     const [userReactions, setUserReactions] = useState(null);
+    const [rerender, setRerender] = useState(false);
 
     useEffect(() => {
         const getCurrentUserReactions = async () => {
@@ -59,7 +60,7 @@ const Trip = () => {
         };
 
         getTripInfo();
-    }, [tripId]);
+    }, [tripId, rerender]);
 
     return (
         <div className="trip-container">
@@ -102,7 +103,7 @@ const Trip = () => {
 
             {/* Comments */}
             <div>
-                <CommentsForm trip={tripCardId} />
+                <CommentsForm trip={tripCardId} setRerender={setRerender} />
 
                 <div>
                     {comments.map(comment => (

@@ -41,6 +41,7 @@ const CommentsForm = props => {
         }
 
         setComment('');
+        props.setRerender(prev => !prev);
     }
     return (
         <div>
