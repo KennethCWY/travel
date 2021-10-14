@@ -27,7 +27,7 @@ const App = () => {
                 <PrivateRoute path="/flights" component={Flights} />
                 <PrivateRoute path="/hotels" component={Accommodation} />
                 <PrivateRoute path="/experiences" component={Experiences} />
-                <PrivateRoute path="/trips/:tripId" component={Trip} />
+                <Route path="/trips/:tripId" component={Trip} />
                 <NotFound />
             </Switch>
             <Footer />
