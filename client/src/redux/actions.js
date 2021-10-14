@@ -63,14 +63,14 @@ export const updateDestinationDetails = (city, country, countryCode) => {
     return { type: UPDATE_DESTINATION_DETAILS, payload: { city, country, countryCode } };
 };
 
-export function randomiseArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor((i + 1) * Math.random());
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+// export function randomiseArray(arr) {
+//     for (let i = arr.length - 1; i > 0; i--) {
+//         const j = Math.floor((i + 1) * Math.random());
+//         [arr[i], arr[j]] = [arr[j], arr[i]];
+//     }
 
-    return arr;
-}
+//     return arr;
+// }
 
 export async function fetchFlights(depCityName, depCountryCode, destCityName, destCountryCode) {
 
@@ -100,20 +100,22 @@ export async function fetchFlights(depCityName, depCountryCode, destCityName, de
         for (let destAirportCode of destAirportCodes) {
 
             const params = {
-                access_key: '89366708281455bcbbb0df3af3318f35',
+                access_key: 'c68068c8f3caf4ac252b2e3b0f877860',
+                limit: 1,
                 dep_iata: depAirportCode,
                 arr_iata: destAirportCode
+                // arr_scheduled_time_dep: date // This is not supported on the free plan apparently
             }
             
             try {
                 const flightsData = await axios.get('http://api.aviationstack.com/v1/flights', {params});
-                const scheduledFlights = flightsData.data.data.filter(flight => flight.flight_status === 'scheduled');
-                flights.push(...scheduledFlights);
+                // const scheduledFlights = flightsData.data.data.filter(flight => flight.flight_status === 'scheduled');
+                flights.push(...flightsData.data.data);
             } catch (err) {
                 console.error(err);
             }
         }
     }
 
-    return randomiseArray(flights)
+    return flights
 }

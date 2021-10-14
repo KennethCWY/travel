@@ -47,6 +47,8 @@ class Experience(models.Model):
     tripadvisor_link = models.CharField(max_length=500, null=True, blank=True)
     website_link = models.CharField(max_length=500, null=True, blank=True)
     cuisine = models.CharField(max_length=500, null=True, blank=True)
+    price = models.CharField(max_length=10, null=True, blank=True)
+    ranking = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
         return f'{self.category.capitalize()} - {self.name}'

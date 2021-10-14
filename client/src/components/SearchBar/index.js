@@ -33,9 +33,6 @@ function SearchBar() {
         const userId = localStorage.getItem("user_id")
         const formData = {trip_id: tripId, departure_date: departureDate, return_date: returnDate, destination: destination, departure: departure, user: userId}
         const token = localStorage.getItem("access_token")
-        console.log(formData)
-        console.log(token)
-        console.log(departureDate, returnDate)
 
         const { data } = await axios.post('http://localhost:8000/api/trips/', formData, {
             headers: {
@@ -44,10 +41,8 @@ function SearchBar() {
             },
         })
 
-        console.log(data)
         dispatch(updateTripDetails({tripId: data.id, tripCardId: data.trip_id, departureDate, returnDate}));
-        history.push('/flights');
-        
+        history.push('/hotels');
     }
 
     const formatDestinationAddress = async place => {
@@ -64,11 +59,10 @@ function SearchBar() {
 
         const country = countryComponent.long_name;
         const countryCode = countryComponent.short_name;
-        const city = cityComponent.long_name;
+        const city = cityComponent?.long_name;
 
         dispatch(updateDestination(formattedAddress));
         dispatch(updateDestinationDetails(city, country, countryCode));
-
     };
 
     const handleDestinationChanged = () => {

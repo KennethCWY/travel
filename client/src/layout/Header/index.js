@@ -4,6 +4,21 @@ import './style.css';
 import { Logout } from '../../components';
 
 const Header = () => {
+    let token = localStorage.getItem('access_token');
+    let isLoggedIn = token ? (
+        <Logout />
+    ) : (
+        <div>
+            <NavLink to="/login" className="nav-item nav-link">
+                Login
+            </NavLink>
+
+            <NavLink to="/register" className="nav-item nav-link">
+                Register
+            </NavLink>
+        </div>
+    );
+
     return (
         <nav className="navbar static-top navbar-expand-lg navbar-dark bg-dark">
             <NavLink exact to="/" className="navbar-brand">
@@ -27,7 +42,7 @@ const Header = () => {
                         Flights
                     </NavLink>
 
-                    <NavLink to="/accommodation" className="nav-item nav-link">
+                    <NavLink to="/hotels" className="nav-item nav-link">
                         Accommodation
                     </NavLink>
 
@@ -35,7 +50,9 @@ const Header = () => {
                         Experiences
                     </NavLink>
 
-                    <NavLink to="/login" className="nav-item nav-link">
+                    {isLoggedIn}
+
+                    {/* <NavLink to="/login" className="nav-item nav-link">
                         Login
                     </NavLink>
 
@@ -43,7 +60,7 @@ const Header = () => {
                         Register
                     </NavLink>
 
-                    <Logout />
+                    <Logout /> */}
                 </div>
             </div>
         </nav>
