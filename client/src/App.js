@@ -13,11 +13,12 @@ import {
     Dashboard,
     Trip
 } from './pages';
+import './App.css'
 
 const App = () => {
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <Switch>
                 <PrivateRoute exact path="/" component={LandingPage} />
                 <Route path="/login" component={Login} />
@@ -30,7 +31,7 @@ const App = () => {
                 <Route path="/trips/:tripId" component={Trip} />
                 <NotFound />
             </Switch>
-            <Footer />
+            {/* <Footer /> */}
         </>
     );
 };

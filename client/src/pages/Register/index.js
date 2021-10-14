@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import Token from '../../auth';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import Token from '../../auth';
+import './styles.css';
 
 const Register = () => {
     const history = useHistory();
@@ -34,15 +35,23 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <h1>Registration Form</h1>
+        <div className="register">
+            <div className="register__spotlight">
+                <div className="register__text">
+                    <h1>Explore Beautiful Places</h1>
+                    <p>The simple way to plan your next vacation with friends</p>
+                </div>
+            </div>
+
+            {/* Registration */}
             <form>
+                <h1>Register</h1>
                 <input
                     type="text"
                     required
                     id="email"
                     name="email"
-                    placeholder="email"
+                    placeholder="Email"
                     onChange={handleChange}
                 />
                 <input
@@ -50,7 +59,7 @@ const Register = () => {
                     required
                     id="username"
                     name="username"
-                    placeholder="username"
+                    placeholder="Username"
                     onChange={handleChange}
                 />
                 <input
@@ -58,7 +67,7 @@ const Register = () => {
                     required
                     name="password"
                     id="password"
-                    placeholder="password"
+                    placeholder="Password"
                     onChange={handleChange}
                 />
                 <input type="submit" onClick={handleSubmit} value="Sign Up" />
