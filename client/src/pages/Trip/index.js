@@ -18,6 +18,23 @@ const Trip = () => {
     const [restaurants, setRestaurants] = useState([]);
     const [attractions, setAttractions] = useState([]);
     const [comments, setComments] = useState([]);
+    const [tripCardId, setTripCardId] = useState();
+    const [userReactions, setUserReactions] = useState(null);
+
+    useEffect(() => {
+        const getCurrentUserReactions = async () => {
+            const currentUserId = Number(localStorage.getItem('user_id'));
+            const { data } = await axios.get(
+                'http://localhost:8000/api/experience_reactions/'
+            );
+            const userReactions = await data?.filter(
+                reaction => reaction.user === currentUserId
+            );
+            setUserReactions(userReactions);
+        };
+
+        getCurrentUserReactions();
+    }, []);
 
     useEffect(() => {
         const getTripInfo = async () => {
@@ -35,6 +52,7 @@ const Trip = () => {
                 );
 
                 setComments(data.comments);
+                setTripCardId(data.id);
             } catch (error) {
                 console.error('GET TRIP DETAILS ', error);
             }
@@ -47,7 +65,7 @@ const Trip = () => {
         <div className="trip-container">
             <h1>{trip.destination}</h1>
 
-            {/* Trip Details */}
+            {/* Trip Dates */}
             <div className="flex-row">
                 <Moment format="Do MMM YYYY">{trip.departureDate}</Moment>
                 <span> - </span>
@@ -58,7 +76,7 @@ const Trip = () => {
             {hotels.length ? <h2>Hotels</h2> : null}
             <div className="flex-container">
                 {hotels.map(hotel => (
-                    <HotelCard hotel={hotel} key={hotel.id} />
+                    <HotelCard hotel={hotel} userReactions={userReactions} key={hotel.id} />
                 ))}
             </div>
 
@@ -66,7 +84,11 @@ const Trip = () => {
             {restaurants.length ? <h2>Restaurants</h2> : null}
             <div className="flex-container">
                 {restaurants.map(restaurant => (
-                    <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+                    <RestaurantCard
+                        restaurant={restaurant}
+                        userReactions={userReactions}
+                        key={restaurant.id}
+                    />
                 ))}
             </div>
 
@@ -80,7 +102,7 @@ const Trip = () => {
 
             {/* Comments */}
             <div>
-                <CommentsForm tripId={tripId} />
+                <CommentsForm trip={tripCardId} />
 
                 <div>
                     {comments.map(comment => (
