@@ -18,6 +18,8 @@ const HotelCard = ({ hotel, userReactions }) => {
             <p>Reviews: {hotel.review_count}</p>
             {hotel.ranking && <p>Ranking: {hotel.ranking}</p>}
             {hotel.price && <p>Price range: {hotel.price}</p>}
+
+            {/* Reactions */}
             <div className="flex-row">
                 <span>{likeCount}</span>
                 <button onClick={handleLike}>{userHasLiked ? 'Unlike' : 'Like'}</button>

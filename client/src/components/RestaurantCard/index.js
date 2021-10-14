@@ -1,4 +1,15 @@
-const RestaurantCard = ({ restaurant }) => {
+import useReactionInfo from "../../hooks/useReactionInfo";
+
+const RestaurantCard = ({ restaurant, userReactions }) => {
+    const {
+        likeCount,
+        dislikeCount,
+        userHasLiked,
+        userHasDisliked,
+        handleLike,
+        handleDislike
+    } = useReactionInfo(restaurant, userReactions);
+
     return (
         <div>
             <img src={restaurant.image} alt={restaurant.name} />
@@ -13,6 +24,16 @@ const RestaurantCard = ({ restaurant }) => {
                 <a href={restaurant.tripadvisor_link}>Tripadvisor link</a>
             )}
             {restaurant.cuisine && <p>Cuisine: {restaurant.cuisine}</p>}
+
+            {/* Reactions */}
+            <div className="flex-row">
+                <span>{likeCount}</span>
+                <button onClick={handleLike}>{userHasLiked ? 'Unlike' : 'Like'}</button>
+                <span>{dislikeCount}</span>
+                <button onClick={handleDislike}>
+                    {userHasDisliked ? 'Neutral' : 'Dislike'}
+                </button>
+            </div>
         </div>
     );
 };
