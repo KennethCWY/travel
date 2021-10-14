@@ -1,0 +1,77 @@
+.register {
+    display: flex;
+    height: 100vh;
+}
+
+.register__spotlight {
+    background-image: linear-gradient(rgba(5, 7, 60, 0.6), rgba(5, 7, 60, 0.6)), url(../../assets/auth.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 50%;
+}
+
+.register__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
+
+.register__text > h1{
+    font-weight: 700;
+    font-size: 4rem;
+}
+
+.register__text > p {
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.register > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.register > form > h1 {
+    text-transform: uppercase;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 4rem;
+}
+
+.register input {
+	height: 6rem;
+    padding: 15px;
+    margin-bottom: 30px;
+    background-color: #f4f4f4;
+    border: none;
+    box-shadow: none;
+    text-align: left;
+    font-size: 1.6rem;
+    width: 60%;
+    outline: #333;
+}
+
+.register input[type='submit'] {
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+    text-align: center;
+	text-transform: uppercase;
+	color: white;
+	background: #1CAEFF;
+	height: 6rem;
+	width: 18rem;
+	font-size: 1.8rem;
+	font-weight: 600;
+	outline: transparent;
+	align-self: center;
+	margin-top: 10px;
+}
