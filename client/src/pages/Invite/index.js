@@ -4,8 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import axios from 'axios';
+import useSelector from 'react-redux'
+
 
 const Invite = () => {
+    const tripCardId = useSelector(state => state.tripCardId)
 
     const [formData, updateFormData] = useState(initialFormData);
 
@@ -27,7 +30,7 @@ const Invite = () => {
         axios({
             method: 'post',
             url: '/sharetrip/',
-            data: formData,
+            data: {formData, tripCardId}
         })
     }
 
