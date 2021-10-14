@@ -3,8 +3,14 @@ import axios from 'axios';
 import './style.css';
 
 const CommentsForm = props => {
-    useEffect(() => {
-        async function handleSubmit(e) {
+    const [comment, setComment] = useState();
+
+    const updateComment = e => {
+        setComment(e.target.value);
+    };
+
+    async function handleSubmit(e) {
+        try {
             e.preventDefault();
 
             const body = e.target.comment.value;
@@ -13,7 +19,12 @@ const CommentsForm = props => {
             const tripId = props.trip;
 
             const token = localStorage.getItem('access_token');
-            const commentData = { trip: tripId, user: user, body: body, timestamp: timestamp };
+            const commentData = {
+                trip: tripId,
+                user: user,
+                body: body,
+                timestamp: timestamp
+            };
 
             const { data } = await axios.post(
                 `http://localhost:8000/api/comments/`,
@@ -25,9 +36,12 @@ const CommentsForm = props => {
                     }
                 }
             );
+        } catch (err) {
+            console.log(err);
         }
-    });
 
+        setComment('');
+    }
     return (
         <div>
             <h3>Share your thoughts below</h3>
@@ -37,6 +51,8 @@ const CommentsForm = props => {
                     name="comment"
                     aria-label="comment"
                     placeholder="Type your comment here"
+                    value={comment}
+                    onChange={updateComment}
                     required
                 ></textarea>
                 <button id="submit-btn" type="submit">
