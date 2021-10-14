@@ -35,6 +35,7 @@ A website that allows you to plan your trip with your friends. You can look for 
 #### Challenges
 * Time limit
 * Testing with APIs
+* Auth & Auth with Django
 
 ## Licence 
 * [License](https://opensource.org/licenses/mit-license.php)
