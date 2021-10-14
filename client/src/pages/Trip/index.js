@@ -18,6 +18,7 @@ const Trip = () => {
     const [restaurants, setRestaurants] = useState([]);
     const [attractions, setAttractions] = useState([]);
     const [comments, setComments] = useState([]);
+    const [tripCardId, setTripCardId] = useState();
 
     useEffect(() => {
         const getTripInfo = async () => {
@@ -35,6 +36,7 @@ const Trip = () => {
                 );
 
                 setComments(data.comments);
+                setTripCardId(data.id);
             } catch (error) {
                 console.error('GET TRIP DETAILS ', error);
             }
@@ -80,7 +82,7 @@ const Trip = () => {
 
             {/* Comments */}
             <div>
-                <CommentsForm tripId={tripId} />
+                <CommentsForm trip={tripCardId} />
 
                 <div>
                     {comments.map(comment => (
