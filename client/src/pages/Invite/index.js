@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import axios from 'axios';
-import useSelector from 'react-redux'
+import {useSelector} from 'react-redux'
 
 
 const Invite = () => {
