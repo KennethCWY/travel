@@ -10,13 +10,14 @@ import {useSelector} from 'react-redux'
 const Invite = () => {
     const tripCardId = useSelector(state => state.tripCardId)
 
-    const [formData, updateFormData] = useState(initialFormData);
-
+    
     const initialFormData = Object.freeze({
         name: '',
         toEmail: '',
     });
-
+    
+    const [formData, updateFormData] = useState(initialFormData);
+    
     const handleChange = (e) => {
         updateFormData({
             ...formData,
