@@ -1,1 +1,1 @@
-web: gunicorn server.oyster.wsgi 
+web: gunicorn oyster.wsgi 
