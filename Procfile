@@ -1,1 +1,1 @@
-web: gunicorn server.oyster.wsgi --log-file -
+web: gunicorn server.oyster.wsgi 
