@@ -2,8 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { useParams } from 'react-router-dom';
-import { HotelCard } from '../../components';
-import RestaurantCard from '../../components/RestaurantCard';
+import {
+    HotelCard,
+    RestaurantCard,
+    AttractionCard,
+    CommentsForm,
+    Comments
+} from '../../components';
 import './style.css';
 
 const Trip = () => {
@@ -12,6 +17,7 @@ const Trip = () => {
     const [hotels, setHotels] = useState([]);
     const [restaurants, setRestaurants] = useState([]);
     const [attractions, setAttractions] = useState([]);
+    const [comments, setComments] = useState([]);
     const [userReactions, setUserReactions] = useState(null);
     
         useEffect(() => {
@@ -25,14 +31,25 @@ const Trip = () => {
             getCurrentUserReactions();
         }, []);
 
+   
+
+
     useEffect(() => {
         const getTripInfo = async () => {
             try {
                 const { data } = await axios.get(`http://localhost:8000/api/trips/${tripId}/`);
                 setTrip(data);
-                setHotels(data.experiences.filter(experience => experience.category === 'hotel'));
-                setRestaurants(data.experiences.filter(experience => experience.category === 'restaurant'));
-                setAttractions(data.experiences.filter(experience => experience.category === 'attraction'));
+                setHotels(
+                    data.experiences.filter(experience => experience.category === 'hotel')
+                );
+                setRestaurants(
+                    data.experiences.filter(experience => experience.category === 'restaurant')
+                );
+                setAttractions(
+                    data.experiences.filter(experience => experience.category === 'attraction')
+                );
+
+                setComments(data.comments);
             } catch (error) {
                 console.error('GET TRIP DETAILS ', error);
             }
@@ -74,6 +91,25 @@ const Trip = () => {
                         key={restaurant.id}
                     />
                 ))}
+            </div>
+
+            {/* Attractions */}
+            {attractions.length ? <h2>Attractions</h2> : null}
+            <div className="flex-container">
+                {attractions.map(attraction => (
+                    <AttractionCard attraction={attraction} key={attraction.id} />
+                ))}
+            </div>
+
+            {/* Comments */}
+            <div>
+                <CommentsForm tripId={tripId} />
+
+                <div>
+                    {comments.map(comment => (
+                        <Comments comment={comment} key={comment.id} />
+                    ))}
+                </div>
             </div>
         </div>
     );
