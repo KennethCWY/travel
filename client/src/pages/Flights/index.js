@@ -33,12 +33,12 @@ const Flights = () => {
     return
   }
 
-  fetchFlightData();
+  if (!x) fetchFlightData();
   dispatch(addFlights(flights));
 
   useEffect(() => {
 
-    if (x === 3) {
+    if (x === 1) {
 
       for (let i = 0; i < flights.length; i++) {
     
@@ -53,6 +53,7 @@ const Flights = () => {
         let hours = Math.floor(timeOfFlight);
         let mins =  timeOfFlight - hours;
         mins *= 60;
+        mins = Math.round(mins);
         
         let flightInfo = {
           depCity: depCityName,
@@ -62,7 +63,7 @@ const Flights = () => {
           destCity: destCityName,
           destDateTime: arrDateDetails.split('T').join('  '),
           destAirport: flight.arrival.airport,
-          filghtHours: hours,
+          flightHours: hours,
           flightMins: mins
         }
         
@@ -83,6 +84,7 @@ const Flights = () => {
         let hours = Math.floor(timeOfFlight);
         let mins =  timeOfFlight - hours;
         mins *= 60;
+        mins = Math.round(mins);
 
         let returnFlightInfo = {
           depCity: destCityName,
@@ -92,7 +94,7 @@ const Flights = () => {
           destCity: depCityName,
           destDateTime: arrDateDetails.split('T').join('  '),
           destAirport: returnFlight.arrival.airport,
-          filghtHours: hours,
+          flightHours: hours,
           flightMins: mins
         }
         
@@ -120,7 +122,7 @@ const Flights = () => {
       </>
     )
   } else {
-    return x > 2
+    return x > 0
       ? <div><button onClick={() => setShowFlights('going')}>Show Going Flights</button> <button onClick={() => setShowFlights('return')}>Show Return Flights</button></div>
       : <div>bionerwu</div>
   }  
