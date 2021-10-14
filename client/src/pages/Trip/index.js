@@ -106,9 +106,12 @@ const Trip = () => {
                 <CommentsForm trip={tripCardId} setRerender={setRerender} />
 
                 <div>
-                    {comments.map(comment => (
-                        <Comments comment={comment} key={comment.id} />
-                    ))}
+                    {comments
+                        .slice(0)
+                        .reverse()
+                        .map(comment => (
+                            <Comments comment={comment} key={comment.id} />
+                        ))}
                 </div>
             </div>
         </div>
