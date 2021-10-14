@@ -1,0 +1,9 @@
+export { default as Explore } from "./Explore";
+export { default as LandingPage } from "./LandingPage";
+export { default as Flights } from "./Flights";
+export { default as Accommodation } from "./Accommodation";
+export { default as Experiences } from "./Experiences";
+export { default as Login } from "./Login";
+export { default as Register } from "./Register";
+export { default as Trip } from "./Trip";
+export { default as Dashboard } from "./Dashboard";

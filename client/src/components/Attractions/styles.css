@@ -1,0 +1,11 @@
+img {
+    height: 200px;
+}
+
+.container {
+    width: 500px;
+}
+
+.flex-container {
+    overflow-x: scroll;
+}

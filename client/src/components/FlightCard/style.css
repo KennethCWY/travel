@@ -1,0 +1,18 @@
+.grid-container {
+    display: grid;
+    grid-template: auto / auto auto auto;
+}
+
+.grid-container {
+    font-size: larger;
+    text-align: center;
+}
+
+#flight-time {
+    margin-top: 50px;
+    margin-bottom: -60px;
+}
+
+#arrow {
+    font-size: 100px;
+}
