@@ -1,0 +1,16 @@
+version: '3'
+services:
+    db:
+        container_name: oyster_db
+        image: postgres:latest
+        ports:
+            - 5432:5432
+        environment:
+            - POSTGRES_DB=oysterdb
+            - POSTGRES_USER=oysteruser
+            - POSTGRES_PASSWORD=oysterpass
+        volumes:
+            - 'dbdata:/var/lib/postgresql/data'
+            - './db:/docker-entrypoint-initdb.d/:ro'
+volumes:
+    dbdata:
