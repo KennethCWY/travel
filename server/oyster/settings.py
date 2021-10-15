@@ -151,6 +151,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://oyster-travel.herokuapp.com',
 ]
 
 AUTH_USER_MODEL = "users.NewUser"
